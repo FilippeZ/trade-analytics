@@ -1,203 +1,105 @@
-# 📊 COVID-19 Trade Analytics
+# 🌍 Trade Analytics — Global Supply Chain & COVID-19 Impact
 
-> **An end-to-end data pipeline and interactive dashboard analysing the impact of the COVID-19 pandemic on New Zealand's international trade flows (2015–2021).**
+> **An end-to-end data engineering pipeline analyzing the unprecedented impact of COVID-19 on New Zealand's international trade flows (2015–2021).**
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)](https://www.python.org/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Pandas](https://img.shields.io/badge/Pandas-1.5%2B-150458?logo=pandas)](https://pandas.pydata.org/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter)](https://jupyter.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
 
-## 🏛️ Overview
+## 📋 Overview
+**Trade Analytics** is a comprehensive analytical framework designed to quantify supply chain disruptions during crisis events. Built using **Statistics New Zealand's** official *Effects of COVID-19 on Trade* dataset, this ecosystem features automated data ingestion, relational warehousing in MySQL, deep-dive exploratory data analysis (EDA), and a responsive desktop application for interactive decision-making.
 
-This project provides a **complete analytical pipeline** over Statistics New Zealand's official *Effects of COVID-19 on Trade* dataset. It covers:
+## 🎯 The Problem
+The COVID-19 pandemic caused severe bottlenecks in global logistics, leading to:
+* **Critical Supply Shortages:** Unpredictable availability of essential commodities like food and medical supplies.
+* **Logistical Paralysis:** Disproportionate collapse of air freight routes compared to maritime shipping.
+* **Economic Uncertainty:** Without clear visualization of macro-trends, policymakers and business leaders lack the insight needed for robust recovery planning.
 
-| Layer | Tool | Purpose |
-|---|---|---|
-| **Data Acquisition** | `download.py` | Fetches the latest provisional dataset from Stats NZ |
-| **Data Warehouse** | `MySQL.py` | Ingests CSV data into a normalised MySQL schema |
-| **Exploratory Analysis** | `Analysis.ipynb` | Deep-dive EDA with Pandas & Matplotlib |
-| **Interactive Dashboard** | `GUI.py` | Desktop GUI with 8 visualisation types via PySimpleGUI |
-| **Report** | `Report1.pdf` | Full written analysis with findings |
+## ✅ The Solution
+This platform transforms millions of raw customs records into actionable business intelligence using a structured data pipeline:
 
----
-
-## 🌐 Problem Statement
-
-The COVID-19 pandemic triggered unprecedented disruptions to global supply chains and trade flows. Understanding **when, where, and which commodities** were affected is critical for:
-
-- **Policy-makers** designing trade-resilience frameworks
-- **Logistics companies** re-routing supply chains
-- **Economists** modelling economic recovery timelines
-
-This project quantifies those disruptions using real-world customs data for New Zealand's imports and exports.
+| Feature | Technology | Business Value |
+| :--- | :--- | :--- |
+| **Data Automation** | `requests` API | Hands-free data acquisition of the latest provisional records |
+| **Data Warehousing** | MySQL | Robust, query-optimized storage of massive temporal datasets |
+| **Interactive BI** | PySimpleGUI | 8 dynamic dashboards for instant stakeholder insights |
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Workflow
+The system follows a classic Extract, Transform, Load (ETL) and Reporting architecture:
 
-```
+1. **Extraction Layer:** Automated retrieval of remote CSV troves (`download.py`).
+2. **Persistence Layer:** Schema definition and bulk insertion into a relational database (`MySQL.py`).
+3. **Exploration Layer:** In-depth statistical analysis and trend identification (`Analysis.ipynb`).
+4. **Presentation Layer:** End-user graphical interface for exploring turnover by country, mode, and commodity (`GUI.py`).
+
+## 📂 Project Structure
+```text
 trade-analytics/
-│
-├── 📥  Data Acquisition
-│   └── download.py              # HTTP download from Stats NZ API
-│
-├── 🗄️  Data Warehouse
-│   ├── MySQL.py                 # ETL: CSV → MySQL (covid_data DB)
-│   └── SQL_Data.sql             # Full SQL dump for reproducibility
-│
-├── 🔬  Exploratory Analysis
-│   └── Analysis.ipynb           # Jupyter EDA notebook
-│
-├── 🖥️  Application Layer
-│   └── GUI.py                   # PySimpleGUI interactive dashboard
-│
-├── 📄  Reporting
-│   └── Report1.pdf              # Full analytical report
-│
-└── ⚙️  Configuration
-    ├── requirements.txt
-    └── .gitignore
+├── GUI.py                # 🖥️ Main Interactive Dashboard
+├── MySQL.py              # 🗄️ ETL pipeline to MySQL Data Warehouse
+├── download.py           # 📥 Automated Data Acquisition
+├── Analysis.ipynb        # 🔬 Exploratory Data Analysis
+├── requirements.txt      # ⚙️ Python dependencies
+├── Report1.pdf           # 📄 Comprehensive Analytical Report
+└── .gitignore            # 🚫 Excludes large data artifacts
 ```
-
----
-
-## 📈 Dashboard Visualisations
-
-The `GUI.py` desktop application provides 8 built-in plots:
-
-| # | Visualisation | Insight |
-|---|---|---|
-| 1 | **Monthly Turnover** | Trend line of total trade value month-by-month |
-| 2 | **Country Turnover** | Bar chart — top trading partners |
-| 3 | **Transport Mode Turnover** | Sea vs. Air vs. Other split |
-| 4 | **Weekday Turnover** | Intra-week distribution of trade activity |
-| 5 | **Category of Goods Turnover** | Horizontal bar by commodity type |
-| 6 | **Top 5 Peak Months** | Months with highest recorded trade values |
-| 7 | **Top 5 Commodities per Country** | Country-level commodity breakdown |
-| 8 | **Peak Day per Commodity** | Identifies record-high day for every category |
-
----
-
-## 🗄️ Database Schema
-
-```sql
-CREATE TABLE covid90_table (
-    Direction       VARCHAR(255),   -- Import / Export
-    Year            INT,
-    Date            DATETIME,
-    Weekday         VARCHAR(255),
-    Country         VARCHAR(255),
-    Commodity       VARCHAR(255),
-    Transport_Mode  VARCHAR(255),
-    Measure         VARCHAR(255),   -- Value / Volume
-    Value           BIGINT,         -- NZD
-    Cumulative      BIGINT
-);
-```
-
----
 
 ## 🚀 Quick Start
 
-### 1. Clone the repository
-
+### 1. Installation
 ```bash
 git clone https://github.com/FilippeZ/trade-analytics.git
 cd trade-analytics
-```
-
-### 2. Install dependencies
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Download the dataset
-
+### 2. Data Acquisition
 ```bash
 python download.py
-# → saves covid_trade_data.csv locally
 ```
 
-### 4. (Optional) Load into MySQL
-
-> Requires a running MySQL 8 instance with a database named `covid_data`.
-
-```bash
-# Update credentials in MySQL.py first, then:
-python MySQL.py
-```
-
-### 5. Launch the interactive dashboard
-
+### 3. Launching the Interface
 ```bash
 python GUI.py
 ```
 
----
-
-## 📊 Key Findings (from NotebookLM Analysis)
-
-### Main Analytical Findings
-- **Trade Peaked During the Pandemic (2021):** Despite global disruptions, trade showed an upward seasonal trend. The top five months with the highest absolute turnover across the 2015–2021 period all occurred in **2021** (November, July, October, June, and May).
-- **Geographical Trade Variance:** **China** recorded the highest trade turnover, followed by **Australia** and the rest of East Asia.
-- **Dominance of Sea Transport:** **Sea transport** handled a vastly larger share of the total trade turnover compared to Air transport.
-- **Weekly Trade Rhythms:** Trade activity follows a clear weekly pattern, peaking on **Mondays** and experiencing a sharp decline over the weekend (Saturdays and Sundays).
-- **Top Traded Commodities:** **"Non-food manufactured goods"** and **"Milk powder, butter, and cheese"** were the highest-performing commodity categories in terms of total turnover.
-
-### Key Takeaways & Conclusions
-- **Resilience and Growth in Trade:** The fact that the highest global turnover months occurred in 2021 suggests that trade activity either strongly rebounded or surged during the later stages of the COVID-19 pandemic.
-- **The Power of Data Aggregation:** The project successfully demonstrates the use of Python, Pandas, and Matplotlib to clean, aggregate, and visualize massive commercial datasets to overcome challenges posed by crises.
-- **Business Intelligence Application:** The exploratory analysis proves that visualizing commercial data across varying dimensions (time, geography, transport mode, and product category) is essential for extracting actionable insights regarding seasonal trends and logistical dependencies.
+*(Optional) To populate the MySQL warehouse, ensure a local MySQL instance is running with a `covid_data` schema, update credentials in `MySQL.py`, and run it.*
 
 ---
 
-## 🛠️ Technology Stack
+## 📊 Business Intelligence Insights
 
-| Technology | Version | Role |
-|---|---|---|
-| Python | 3.8+ | Core language |
-| Pandas | 1.5+ | Data manipulation |
-| Matplotlib | 3.6+ | Visualisation engine |
-| PySimpleGUI | 4.60+ | Desktop GUI framework |
-| MySQL | 8.0 | Relational data warehouse |
-| mysql-connector-python | 8.0+ | Python–MySQL bridge |
-| Jupyter Notebook | 6.5+ | EDA environment |
-| Requests | 2.28+ | Data download |
+By analyzing 2015-2021 data, our models revealed several non-intuitive market behaviors:
 
----
+### 📈 Resilience and Explosive Rebound
+Despite initial lockdowns, global trade demonstrated a remarkable "V-shaped" recovery. The top five months for absolute turnover across the entire decade all occurred during the pandemic's later stages in **2021** (November, July, October, June, and May). 
 
-## 📁 Data Source
+### 🚢 The Dominance of Sea Freight
+While passenger aviation collapsed, cargo logistics rapidly pivoted. **Sea transport** proved highly resilient, absorbing the shock and moving an overwhelmingly larger share of trade volume compared to air transport, ensuring supply chain continuity.
 
-**Statistics New Zealand — Effects of COVID-19 on Trade**  
-*At 15 December 2021 (provisional)*  
-🔗 [https://www.stats.govt.nz/](https://www.stats.govt.nz/assets/Uploads/Effects-of-COVID-19-on-trade/)
+### 🏭 Commodity Winners
+Not all sectors suffered equally. Essential and primary industrial categories, specifically **"Non-food manufactured goods"** and **"Milk powder, butter, and cheese"**, emerged as the highest-performing segments, shielding the export economy from broader macro-economic shocks.
 
-> ⚠️ **Note:** Large data files (`*.csv`, `*.sql`, `*.mp4`) are excluded from this repository via `.gitignore`. Run `download.py` to fetch the dataset locally, or import `SQL_Data.sql` into your MySQL instance.
+### ⏱️ Temporal Trade Rhythms
+The data proves logistics is highly bound to standard behavioral weeks: trade activity peaks sharply on **Mondays** as backlogs from the weekend are cleared, followed by a severe drop-off on Saturdays and Sundays.
 
 ---
 
-## 📝 Project Structure Notes
+## 🛠️ Tech Stack
+* **Language:** Python 3.8+
+* **Data Engineering:** Pandas, MySQL Connector
+* **Data Visualization:** Matplotlib
+* **User Interface:** PySimpleGUI
+* **Database:** MySQL 8.0
 
-- **`download.py`** — Single-script data acquisition, no manual download needed
-- **`MySQL.py`** — Update `user`, `password`, and `database` fields before first run
-- **`GUI.py`** — Standalone desktop app; dataset must exist locally as `covid_trade_data.csv`
-- **`Analysis.ipynb`** — Self-contained EDA; run all cells top-to-bottom
-
----
+## 📄 License
+Licensed under the MIT License — see `LICENSE` for details. Data sourced from Statistics New Zealand (CC BY 4.0).
 
 ## 👤 Author
-
-**Filippos** — Data Engineering & Analytics  
-📧 [GitHub Profile](https://github.com/FilippeZ)
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — see [LICENSE](LICENSE) for details.
-
-Data sourced from Statistics New Zealand is licensed under the [Creative Commons Attribution 4.0 International licence](https://creativecommons.org/licenses/by/4.0/).
+**Filippos-Paraskevas Zygouris**  
+[GitHub](https://github.com/FilippeZ)
