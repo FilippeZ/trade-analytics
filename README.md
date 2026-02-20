@@ -139,15 +139,19 @@ python GUI.py
 
 ---
 
-## 📊 Key Findings
+## 📊 Key Findings (from NotebookLM Analysis)
 
-- **Peak trade collapse**: April–May 2020 saw the sharpest month-on-month decline across all commodity groups
-- **Air freight** suffered disproportionately (−60% vs. −22% for sea freight) during initial lockdowns
-- **Dairy & Meat** exports remained relatively resilient, classified as essential goods
-- **China** remained the dominant trading partner throughout the pandemic period
-- Trade **recovered to pre-pandemic levels** by Q3 2021 for most commodities
+### Main Analytical Findings
+- **Trade Peaked During the Pandemic (2021):** Despite global disruptions, trade showed an upward seasonal trend. The top five months with the highest absolute turnover across the 2015–2021 period all occurred in **2021** (November, July, October, June, and May).
+- **Geographical Trade Variance:** **China** recorded the highest trade turnover, followed by **Australia** and the rest of East Asia.
+- **Dominance of Sea Transport:** **Sea transport** handled a vastly larger share of the total trade turnover compared to Air transport.
+- **Weekly Trade Rhythms:** Trade activity follows a clear weekly pattern, peaking on **Mondays** and experiencing a sharp decline over the weekend (Saturdays and Sundays).
+- **Top Traded Commodities:** **"Non-food manufactured goods"** and **"Milk powder, butter, and cheese"** were the highest-performing commodity categories in terms of total turnover.
 
-*Full analysis available in [Report1.pdf](Report1.pdf)*
+### Key Takeaways & Conclusions
+- **Resilience and Growth in Trade:** The fact that the highest global turnover months occurred in 2021 suggests that trade activity either strongly rebounded or surged during the later stages of the COVID-19 pandemic.
+- **The Power of Data Aggregation:** The project successfully demonstrates the use of Python, Pandas, and Matplotlib to clean, aggregate, and visualize massive commercial datasets to overcome challenges posed by crises.
+- **Business Intelligence Application:** The exploratory analysis proves that visualizing commercial data across varying dimensions (time, geography, transport mode, and product category) is essential for extracting actionable insights regarding seasonal trends and logistical dependencies.
 
 ---
 
